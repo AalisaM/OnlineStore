@@ -1,81 +1,63 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
-<html>
-<head>
-	<title>Shipping Type Page</title>
-	<style type="text/css">
-		.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-		.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
-		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
-		.tg .tg-4eph{background-color:#f9f9f9}
-	</style>
-</head>
-<body>
-Add Shipping Type
-</h1>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:url var="addAction" value="/shipping/add" ></c:url>
+<div class="col content" style="margin-left: 17vw; width: 70vw;">
 
-<form:form action="${addAction}" commandName="shipping">
-	<table>
-		<c:if test="${!empty shipping.type}">
+	<h4>Shipping Type list</h4>
+	<table class="table" style="font-size: 18px">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">Shipping Type ID</th>
+			<th scope="col">Shipping Type</th>
+			<th scope="col">Edit</th>
+			<th scope="col">Delete</th>
+		</tr>
+		</thead>
+		<c:forEach items="${listShippingTypes}" var="shipping">
 			<tr>
+				<td class="sid">${shipping.id}</td>
+				<td>${shipping.type}</td>
 				<td>
-					<form:label path="id">
-						<spring:message text="ID"/>
-					</form:label>
+					<button class="editShipping btn"><img src="/assets/images/edit.png" alt="edit" style="width:20px"></button>
 				</td>
 				<td>
-					<form:input path="id" readonly="true" size="8"  disabled="true" />
-					<form:hidden path="id" />
+					<button class="removeShipping btn"><img src="/assets/images/trash.png" alt="edit" style="width:20px"></button>
 				</td>
 			</tr>
+		</c:forEach>
+	</table>
+</div>
+
+<div class="col content" style="margin-top:4vw; margin-left: 17vw; width: 70vw;">
+	<h4>Add shipping</h4>
+
+	<c:if test="${(! empty shipping) && (shipping.id > 0)}">
+		<c:url var="addAction" value="/admin/shipping/edit" ></c:url>
+	</c:if>
+	<c:if test="${(! empty shipping) && (shipping.id == 0)}">
+		<c:url var="addAction" value="/admin/shipping/add" ></c:url>
+	</c:if>
+	<form:form action="${addAction}" commandName="shipping">
+		<div class="form-group row" style="display: none">
+			<label for="id" class="col-sm-3 col-form-label">ID</label>
+			<div class="col">
+				<input type="text" class="form-control" id="id" name="id"
+					   value="${shipping.id}" placeholder="id" required>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="type" class="col-sm-3 col-form-label">Type</label>
+			<div class="col">
+				<input type="text" class="form-control" id="type" name="type"
+					   value="${shipping.type}" placeholder="type" required>
+			</div>
+		</div>
+		<c:if test="${!empty shipping.type}">
+			<button class="updateShipping btn btn-primary btn-lg btn-block orderbutton">Edit shipping</button>
 		</c:if>
-		<tr>
-			<td>
-				<form:label path="type">
-					<spring:message text="type"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="type" />
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<c:if test="${!empty shipping.type}">
-					<input type="submit"
-						   value="<spring:message text="Edit shipping"/>" />
-				</c:if>
-				<c:if test="${empty shipping.type}">
-					<input type="submit"
-						   value="<spring:message text="Add shipping"/>" />
-				</c:if>
-			</td>
-		</tr>
-	</table>
-</form:form>
-<br>
-<h3>Shipping Type List</h3>
-<c:if test="${!empty listShippingTypes}">
-	<table class="tg">
-	<tr>
-		<th width="80">Shipping Type ID</th>
-		<th width="120">Shipping Type </th>
-		<th width="60">Edit</th>
-		<th width="60">Delete</th>
-	</tr>
-	<c:forEach items="${listShippingTypes}" var="shipping">
-		<tr>
-			<td>${shipping.id}</td>
-			<td>${shipping.type}</td>
-			<td><a href="<c:url value='/shipping/edit/${shipping.id}' />" >Edit</a></td>
-			<td><a href="<c:url value='/shipping/remove/${shipping.id}' />" >Delete</a></td>
-		</tr>
-	</c:forEach>
-	</table>
-</c:if>
-</body>
-</html>
+		<c:if test="${empty shipping.type}">
+			<button class="addShipping btn btn-primary btn-lg btn-block orderbutton">Add shipping</button>
+		</c:if>
+	</form:form>
+</div>

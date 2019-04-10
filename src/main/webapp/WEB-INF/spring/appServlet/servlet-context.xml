@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:security="http://www.springframework.org/schema/c"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.1.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+>
+
+
+	<context:component-scan base-package="jschool" />
+
+	<!--<security:http auto-config="true">-->
+		<!--&lt;!&ndash;<security:intercept-url pattern="/register"&ndash;&gt;-->
+			<!--&lt;!&ndash;access="IS_AUTHENTICATED_ANONYMOUSLY" />&ndash;&gt;-->
+		<!--&lt;!&ndash;<security:intercept-url pattern="/login*"&ndash;&gt;-->
+			<!--&lt;!&ndash;access="ROLE_USER" />&ndash;&gt;-->
+		<!--&lt;!&ndash;<security:intercept-url pattern="/logout*"&ndash;&gt;-->
+			<!--&lt;!&ndash;access="ROLE_USER,ROLE_ADMIN" />&ndash;&gt;-->
+		<!--&lt;!&ndash;<security:form-login/>&ndash;&gt;-->
+		<!--<intercept-url pattern="/any_url_pattern" access="ROLE_USER" />-->
+	<!--</security:http>-->
+
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
@@ -15,73 +38,108 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
-
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+	<!--<resources mapping="/resources/**" location="/resources/" />-->
+	<!-- Mappings -->
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources
 		in the /WEB-INF/views directory -->
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
 
-	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<beans:property name="url"
-			value="jdbc:mysql://localhost:3306/store?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
-		<beans:property name="username" value="userT" />
-		<beans:property name="password" value="1234" />
-	</beans:bean>
+	<!--<beans:bean-->
+		<!--class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+		<!--<beans:property name="prefix" value="/WEB-INF/views/" />-->
+		<!--<beans:property name="suffix" value=".jsp" />-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"-->
+		<!--destroy-method="close">-->
+		<!--<beans:property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />-->
+		<!--<beans:property name="url"-->
+			<!--value="jdbc:mysql://localhost:3306/db_alice?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />-->
+		<!--<beans:property name="username" value="user" />-->
+		<!--<beans:property name="password" value="user" />-->
+
+	<!--</beans:bean>-->
 
 	<!-- Hibernate 4 SessionFactory Bean definition -->
-	<beans:bean id="hibernate4AnnotatedSessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="annotatedClasses">
-			<beans:list>
-				<beans:value>com.journaldev.spring.model.ShippingType</beans:value>
-			</beans:list>
-		</beans:property>
-		<beans:property name="hibernateProperties">
-			<beans:props>
-				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
-				</beans:prop>
-				<beans:prop key="hibernate.show_sql">true</beans:prop>
-			</beans:props>
-		</beans:property>
-	</beans:bean>
+	<!--<beans:bean id="hibernate5AnnotatedSessionFactory"-->
+		<!--class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">-->
+		<!--<beans:property name="dataSource" ref="dataSource" />-->
+		<!--<beans:property name="annotatedClasses">-->
+			<!--<beans:list>-->
+				<!--<beans:value>User</beans:value>-->
+				<!--<beans:value>Address</beans:value>-->
+				<!--<beans:value>ShippingType</beans:value>-->
+				<!--<beans:value>Category</beans:value>-->
+				<!--<beans:value>Product</beans:value>-->
+			<!--</beans:list>-->
+		<!--</beans:property>-->
+		<!--<beans:property name="hibernateProperties">-->
+			<!--<beans:props>-->
+				<!--<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect-->
+				<!--</beans:prop>-->
+				<!--<beans:prop key="hibernate.show_sql">true</beans:prop>-->
+			<!--</beans:props>-->
+		<!--</beans:property>-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="shippingTypeDAO" class="ShippingTypeDAOImpl">-->
+		<!--<beans:property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory" />-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="shippingTypeService" class="ShippingTypeServiceImpl">-->
+		<!--<beans:property name="shippingTypeDAO" ref="shippingTypeDAO"></beans:property>-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="addressDAO" class="AddressDAOImpl">-->
+		<!--<beans:property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory" />-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="addressService" class="AddressServiceImpl">-->
+		<!--<beans:property name="addressDAO" ref="addressDAO"></beans:property>-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="userDAO" class="UserDAOImpl">-->
+		<!--<beans:property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory" />-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="userService" class="UserServiceImpl">-->
+		<!--<beans:property name="userDAO" ref="userDAO"></beans:property>-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="productDAO" class="ProductDAOImpl">-->
+		<!--<beans:property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory" />-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="productService" class="ProductServiceImpl">-->
+		<!--<beans:property name="productDAO" ref="productDAO"></beans:property>-->
+	<!--</beans:bean>-->
+
+	<!--<beans:bean id="categoryDAO" class="CategoryDAOImpl">-->
+		<!--<beans:property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory" />-->
+	<!--</beans:bean>-->
+
+
+	<!--<beans:bean id="categoryService" class="CategoryServiceImpl">-->
+		<!--<beans:property name="categoryDAO" ref="categoryDAO"></beans:property>-->
+	<!--</beans:bean>-->
+
+	<!--<context:component-scan base-package="com.journaldev.spring" />-->
 	
-	<beans:bean id="shippingTypeDAO" class="com.journaldev.spring.dao.ShippingTypeDAOImpl">
-		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	</beans:bean>
+	<!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
 
-	<beans:bean id="shippingTypeService" class="com.journaldev.spring.service.ShippingTypeServiceImpl">
-		<beans:property name="shippingTypeDAO" ref="shippingTypeDAO"></beans:property>
-	</beans:bean>
+	<!--<beans:bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">-->
+		<!--<beans:property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory" />-->
+	<!--</beans:bean>-->
 
-	<beans:bean id="addressDAO" class="com.journaldev.spring.dao.AddressDAOImpl">
-		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	</beans:bean>
+	<mvc:resources mapping="/js/**" location="/assets/js/"/>
+	<mvc:resources mapping="/images/**" location="/assets/images/"/>
 
-	<beans:bean id="addressService" class="com.journaldev.spring.service.AddressServiceImpl">
-		<beans:property name="addressDAO" ref="addressDAO"></beans:property>
-	</beans:bean>
-	<beans:bean id="userDAO" class="com.journaldev.spring.dao.UserDAOImpl">
-		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-	</beans:bean>
+	<mvc:annotation-driven />
 
-	<beans:bean id="userService" class="com.journaldev.spring.service.UserServiceImpl">
-		<beans:property name="userDAO" ref="userDAO"></beans:property>
-	</beans:bean>
-
-	<context:component-scan base-package="com.journaldev.spring" />
-	
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
-	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	<beans:bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10000000"/>
 	</beans:bean>
 
 
 </beans:beans>
+
+
